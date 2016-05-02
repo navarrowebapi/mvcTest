@@ -1,0 +1,38 @@
+﻿@model  List<MvcTestGit.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Produtos</h2>
+
+@foreach (var prod in Model)
+{
+    <ol>
+        <li>@prod.Id - @prod.Name - @prod.Category - @prod.Price</li>
+    </ol>
+}
+
+@*Ex1. Melhorar e colocar em uma tabela*@
+
+
+<div class="table-responsive">
+    <table class="table table-striped ">
+        <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Preço</th>
+        </tr>
+        @foreach (var prod in Model)
+        {
+            var badgeClass = @prod.Price <= 90 ? "label-success": "label-danger";
+            <tr>
+                <td><span class="label @badgeClass">@prod.Name</span></td>
+                <td>@prod.Category</td>
+                <td>@prod.Price</td>
+            </tr>
+        }
+    </table>
+</div>
+
+
