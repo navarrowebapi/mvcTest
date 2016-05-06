@@ -9,24 +9,23 @@ namespace MvcTestGit.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: Product
+        static List<Product> listaDeProdutos = new List<Product>
+        { 
+            new Product { Id = 1, Name = "Tomato Soup", Category = "Groceries", Price = 1 }, 
+            new Product { Id = 2, Name = "Yo-yo", Category = "Toys", Price = 3.75M }, 
+            new Product { Id = 3, Name = "Hammer", Category = "Hardware", Price = 16.99M } 
+        };
+
         public ActionResult Index()
         {
-            var prod1 = new Product { Id = 1, Category = "Hardware", Name = "Keyboard", Price = 100};
-            var prod2 = new Product { Id = 2, Category = "Hardware", Name = "Mouse", Price = 50 };
-            var prod3 = new Product { Id = 3, Category = "Software", Name = "Antivirus", Price = 10 };
-            var Produtos = new List<Product>{prod1, prod2, prod3};
-
-            return View(Produtos);
+            return View(listaDeProdutos);
         }
 
-        // GET: Product/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Product/Create
         public ActionResult Create()
         {
             return View();
@@ -34,16 +33,16 @@ namespace MvcTestGit.Controllers
 
         // POST: Product/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Product produto)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                listaDeProdutos.Add(produto);
                 return RedirectToAction("Index");
             }
             catch
             {
+                //TODO: Redirect to a error page
                 return View();
             }
         }

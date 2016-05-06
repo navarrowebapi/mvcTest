@@ -6,12 +6,19 @@
 
 <h2>Produtos</h2>
 
-@foreach (var prod in Model)
+<a href="@Url.Action("Create", "Product")" class="btn btn-success">
+    Novo Produto
+    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+</a>
+
+<hr />
+
+@*@foreach (var prod in Model)
 {
     <ol>
         <li>@prod.Id - @prod.Name - @prod.Category - @prod.Price</li>
     </ol>
-}
+}*@
 
 @*Ex1. Melhorar e colocar em uma tabela*@
 
@@ -25,7 +32,7 @@
         </tr>
         @foreach (var prod in Model)
         {
-            var badgeClass = @prod.Price <= 90 ? "label-success": "label-danger";
+            var badgeClass = @prod.Price <= 15 ? "label-success": "label-danger";
             <tr>
                 <td><span class="label @badgeClass">@prod.Name</span></td>
                 <td>@prod.Category</td>
