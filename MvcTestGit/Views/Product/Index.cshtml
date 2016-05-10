@@ -29,6 +29,7 @@
             <th>Nome</th>
             <th>Categoria</th>
             <th>Preço</th>
+            <th>Ações</th>
         </tr>
         @foreach (var prod in Model)
         {
@@ -37,6 +38,7 @@
                 <td><span class="label @badgeClass">@prod.Name</span></td>
                 <td>@prod.Category</td>
                 <td>@prod.Price</td>
+                <td>@Html.ActionLink("editar", "Edit", new {id = prod.Id} , new {@class = "btn btn-danger" })</td>
             </tr>
         }
     </table>
