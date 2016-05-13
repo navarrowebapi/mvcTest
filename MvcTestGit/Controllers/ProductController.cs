@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcTestGit.Models;
+using System.Net;
 
 namespace MvcTestGit.Controllers
 {
@@ -49,23 +50,35 @@ namespace MvcTestGit.Controllers
         }
 
         // GET: Product/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = listaDeProdutos.Find(x => x.Id == id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
         }
 
         // POST: Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Product produto)
         {
             try
             {
-                // TODO: Add update logic here
-
+                Product product = listaDeProdutos.Find(x => x.Id == produto.Id);
+                product.Name = produto.Name;
+                product.Category = produto.Category;
+                product.Price = produto.Price;
                 return RedirectToAction("Index");
             }
             catch
             {
+                //TODO: Redirect to a error page
                 return View();
             }
         }
