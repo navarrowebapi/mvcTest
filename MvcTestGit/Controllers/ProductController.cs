@@ -10,16 +10,19 @@ namespace MvcTestGit.Controllers
 {
     public class ProductController : Controller
     {
-        static List<Product> listaDeProdutos = new List<Product>
-        { 
-            new Product { Id = 1, Name = "Tomato Soup", Category = "Groceries", Price = 1 }, 
-            new Product { Id = 2, Name = "Yo-yo", Category = "Toys", Price = 3.75M }, 
-            new Product { Id = 3, Name = "Hammer", Category = "Hardware", Price = 16.99M } 
-        };
+        EfDb01Context db = new EfDb01Context();
+
+        //**** Foi passada para o método de Seed
+        //static List<Product> listaDeProdutos = new List<Product>
+        //{ 
+        //    new Product { Id = 1, Name = "Tomato Soup", Category = "Groceries", Price = 1 }, 
+        //    new Product { Id = 2, Name = "Yo-yo", Category = "Toys", Price = 3.75M }, 
+        //    new Product { Id = 3, Name = "Hammer", Category = "Hardware", Price = 16.99M } 
+        //};
 
         public ActionResult Index()
         {
-            return View(listaDeProdutos);
+            return View(db.Produtos.ToList());
         }
 
         public ActionResult Details(int id)
@@ -39,7 +42,8 @@ namespace MvcTestGit.Controllers
         {
             try
             {
-                listaDeProdutos.Add(produto);
+                db.Produtos.Add(produto);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
@@ -56,7 +60,7 @@ namespace MvcTestGit.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = listaDeProdutos.Find(x => x.Id == id);
+            Product product = db.Produtos.ToList().Find(x => x.Id == id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -70,7 +74,7 @@ namespace MvcTestGit.Controllers
         {
             try
             {
-                Product product = listaDeProdutos.Find(x => x.Id == produto.Id);
+                Product product = db.Produtos.ToList().Find(x => x.Id == produto.Id);
                 product.Name = produto.Name;
                 product.Category = produto.Category;
                 product.Price = produto.Price;
